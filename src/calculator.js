@@ -42,6 +42,29 @@ function div(nums) {
   return nums.slice(1).reduce((a, b) => a / b, nums[0]);
 }
 
+// Returns remainder of a divided by b
+function modulo(nums) {
+  if (nums.length < 2) throw new Error('Modulo requires two operands');
+  const [a, b] = nums;
+  if (b === 0) throw new Error('Division by zero in modulo');
+  return a % b;
+}
+
+// Power: base ^ exponent
+function power(nums) {
+  if (nums.length < 2) throw new Error('Power requires base and exponent');
+  const [base, exponent] = nums;
+  return Math.pow(base, exponent);
+}
+
+// Square root with error handling for negative numbers
+function squareRoot(nums) {
+  if (nums.length < 1) throw new Error('Square root requires one operand');
+  const n = nums[0];
+  if (n < 0) throw new Error('Cannot take square root of negative number');
+  return Math.sqrt(n);
+}
+
 function compute(op, nums) {
   const normalized = op.toLowerCase();
   switch (normalized) {
@@ -57,12 +80,24 @@ function compute(op, nums) {
     case 'div':
     case '/':
       return div(nums);
+    case 'mod':
+    case '%':
+      return modulo(nums);
+    case 'pow':
+    case '^':
+    case '**':
+    case 'power':
+      return power(nums);
+    case 'sqrt':
+    case 'square-root':
+    case 'squareRoot':
+      return squareRoot(nums);
     default:
       throw new Error(`Unknown operation: ${op}`);
   }
 }
 
-module.exports = { add, sub, mul, div, compute, toNumberArray };
+module.exports = { add, sub, mul, div, modulo, power, squareRoot, compute, toNumberArray };
 
 // CLI behavior: only run when executed directly
 if (require.main === module) {
